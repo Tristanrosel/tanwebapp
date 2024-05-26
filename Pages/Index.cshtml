@@ -1,0 +1,48 @@
+﻿@page
+@model Index
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                Title
+                <div class="btn-group" role="group" aria-label="">
+                    <a href="~/index?sortBy=title&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
+                    <a href="~/index?sortBy=title&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                </div>
+            </th>
+            <th scope="col">
+                Author
+                <div class="btn-group" role="group" aria-label="">
+                    <a href="~/index?sortBy=author&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
+                    <a href="~/index?sortBy=author&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                </div>
+            </th>
+            <th scope="col">
+                Post Date
+                <div class="btn-group" role="group" aria-label="">
+                    <a href="~/index?sortBy=postdate&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
+                    <a href="~/index?sortBy=postdate&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model.Posts)
+        {
+            <tr>
+                <td>@post.Title</td>
+                <td>@post.Author</td>
+                <td>@post.PostDate.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>

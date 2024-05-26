@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tanwebapp", "tanwebapp.csproj", "{FEA3D3CA-B25F-4B0C-B2E3-EAAED6A4FFB7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEA3D3CA-B25F-4B0C-B2E3-EAAED6A4FFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEA3D3CA-B25F-4B0C-B2E3-EAAED6A4FFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEA3D3CA-B25F-4B0C-B2E3-EAAED6A4FFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEA3D3CA-B25F-4B0C-B2E3-EAAED6A4FFB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA4D9656-C145-4BF5-B0AB-03DFCCE147C3}
+	EndGlobalSection
+EndGlobal
