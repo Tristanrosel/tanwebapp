@@ -1,5 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace tanwebapp.Pages
 {
@@ -17,7 +23,7 @@ namespace tanwebapp.Pages
         [BindProperty]
         public SearchParameters? SearchParams { get; set; }
 
-        public void OnGet(string? keyword = "", string? searchBy = "", string? sortBy = null, string? sortAsc = "true")
+        public void OnGet(string? keyword = "", string? searchBy = "", string? sortBy = null, string? sortAsc = "true", int pageSize = 5, int pageIndex = 1)
         {
             if (SearchParams == null)
             {
@@ -26,11 +32,13 @@ namespace tanwebapp.Pages
                     SortBy = sortBy,
                     SortAsc = sortAsc == "true",
                     SearchBy = searchBy,
-                    Keyword = keyword
+                    Keyword = keyword,
+                    PageIndex = pageIndex,
+                    PageSize = pageSize
                 };
             }
 
-            List<Post>? posts = new List<Post>()
+            List<Post> posts = new List<Post>()
             {
                 new Post {
                     Title = "ASP.NET Core Overview",
@@ -144,6 +152,11 @@ namespace tanwebapp.Pages
                 }
             }
 
+            else if ((string.IsNullOrEmpty(SearchParams.SearchBy) || SearchParams.SearchBy == "") && !string.IsNullOrEmpty(SearchParams.Keyword))
+            {
+                posts = posts.Where(a => a.Title != null && a.Title.ToLower().Contains(SearchParams.Keyword.ToLower())).ToList();
+            }
+
             if (SearchParams.SortBy == null || SearchParams.SortAsc == null)
             {
                 this.Posts = posts;
@@ -178,6 +191,13 @@ namespace tanwebapp.Pages
             {
                 this.Posts = posts;
             }
+            int totalCount = this.Posts.Count;
+            int totalPages = (int)Math.Ceiling((double)totalCount / SearchParams.PageSize);
+            int skip = (SearchParams.PageIndex - 1) * SearchParams.PageSize;
+            this.Posts = this.Posts.Skip(skip).Take(SearchParams.PageSize).ToList();
+
+            SearchParams.SearchCount = totalCount;
+            SearchParams.PageCount = totalPages;
         }
 
         public class Post
@@ -194,6 +214,10 @@ namespace tanwebapp.Pages
             public string? Keyword { get; set; }
             public string? SortBy { get; set; }
             public bool? SortAsc { get; set; }
+            public int PageSize { get; set; }
+            public int PageIndex { get; set; }
+            public int PageCount { get; set; }
+            public int SearchCount { get; set; }
         }
     }
 }
