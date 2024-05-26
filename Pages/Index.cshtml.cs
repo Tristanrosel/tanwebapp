@@ -16,7 +16,7 @@ namespace tanwebapp.Pages
 
         public void OnGet(string? sortBy = null, string? sortAsc = "true")
         {
-            List<Post> posts = new List<Post>()
+            List<Post>? posts = new List<Post>()
             {
                 new Post {
                     Title = "ASP.NET Core Overview",
@@ -129,9 +129,9 @@ namespace tanwebapp.Pages
 
         public class Post
         {
-            public string? Title { get; set; }
-            public string? Content { get; set; }
-            public string? Author { get; set; }
+            public string Title { get; set; }
+            public string Content { get; set; }
+            public string Author { get; set; }
             public DateTime PostDate { get; set; }
         }
     }

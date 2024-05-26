@@ -1,5 +1,6 @@
 ﻿@page
-@model Index
+@model tanwebapp.Pages.Index
+
 @{
     ViewData["Title"] = "Home page";
 }
@@ -15,22 +16,22 @@
             <th scope="col">
                 Title
                 <div class="btn-group" role="group" aria-label="">
-                    <a href="~/index?sortBy=title&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
-                    <a href="~/index?sortBy=title&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                    <a href="~/index?sortBy=title&sortAsc=false" type="button" class="btn btn-secondary">&lt;</a>
+                    <a href="~/index?sortBy=title&sortAsc=true" type="button" class="btn btn-secondary">&gt;</a>
                 </div>
             </th>
             <th scope="col">
                 Author
                 <div class="btn-group" role="group" aria-label="">
-                    <a href="~/index?sortBy=author&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
-                    <a href="~/index?sortBy=author&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                    <a href="~/index?sortBy=author&sortAsc=false" type="button" class="btn btn-secondary">&lt;</a>
+                    <a href="~/index?sortBy=author&sortAsc=true" type="button" class="btn btn-secondary">&gt;</a>
                 </div>
             </th>
             <th scope="col">
                 Post Date
                 <div class="btn-group" role="group" aria-label="">
-                    <a href="~/index?sortBy=postdate&sortAsc=false" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-down"></i></a>
-                    <a href="~/index?sortBy=postdate&sortAsc=true" type="button" class="btn btn-secondary"><i class="bi bi-arrow-bar-up"></i></a>
+                    <a href="~/index?sortBy=postdate&sortAsc=false" type="button" class="btn btn-secondary">&lt;</a>
+                    <a href="~/index?sortBy=postdate&sortAsc=true" type="button" class="btn btn-secondary">&gt;</a>
                 </div>
             </th>
         </tr>
