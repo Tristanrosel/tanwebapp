@@ -14,8 +14,22 @@ namespace tanwebapp.Pages
 
         public List<Post> Posts { get; set; }
 
-        public void OnGet(string? sortBy = null, string? sortAsc = "true")
+        [BindProperty]
+        public SearchParameters? SearchParams { get; set; }
+
+        public void OnGet(string? keyword = "", string? searchBy = "", string? sortBy = null, string? sortAsc = "true")
         {
+            if (SearchParams == null)
+            {
+                SearchParams = new SearchParameters()
+                {
+                    SortBy = sortBy,
+                    SortAsc = sortAsc == "true",
+                    SearchBy = searchBy,
+                    Keyword = keyword
+                };
+            }
+
             List<Post>? posts = new List<Post>()
             {
                 new Post {
@@ -110,21 +124,60 @@ namespace tanwebapp.Pages
                 }
             };
 
-            if (sortBy == null || sortAsc == null)
+            if (!string.IsNullOrEmpty(SearchParams.SearchBy) && !string.IsNullOrEmpty(SearchParams.Keyword))
+            {
+                if (SearchParams.SearchBy.ToLower() == "title")
+                {
+                    posts = posts.Where(p => p.Title != null && p.Title.ToLower().Contains(SearchParams.Keyword.ToLower())).ToList();
+                }
+                else if (SearchParams.SearchBy.ToLower() == "author")
+                {
+                    posts = posts.Where(p => p.Author != null && p.Author.ToLower().Contains(SearchParams.Keyword.ToLower())).ToList();
+                }
+                else if (SearchParams.SearchBy.ToLower() == "content")
+                {
+                    posts = posts.Where(p => p.Content != null && p.Content.ToLower().Contains(SearchParams.Keyword.ToLower())).ToList();
+                }
+                else if (SearchParams.SearchBy.ToLower() == "postdate")
+                {
+                    posts = posts.Where(p => p.PostDate.ToString().Contains(SearchParams.Keyword)).ToList();
+                }
+            }
+
+            if (SearchParams.SortBy == null || SearchParams.SortAsc == null)
             {
                 this.Posts = posts;
                 return;
             }
 
-            bool ascending = sortAsc.ToLower() == "true";
-
-            this.Posts = sortBy.ToLower() switch
+            if (SearchParams.SortBy.ToLower() == "title" && SearchParams.SortAsc == true)
             {
-                "title" => ascending ? posts.OrderBy(p => p.Title).ToList() : posts.OrderByDescending(p => p.Title).ToList(),
-                "author" => ascending ? posts.OrderBy(p => p.Author).ToList() : posts.OrderByDescending(p => p.Author).ToList(),
-                "postdate" => ascending ? posts.OrderBy(p => p.PostDate).ToList() : posts.OrderByDescending(p => p.PostDate).ToList(),
-                _ => posts
-            };
+                this.Posts = posts.OrderBy(p => p.Title).ToList();
+            }
+            else if (SearchParams.SortBy.ToLower() == "title" && SearchParams.SortAsc == false)
+            {
+                this.Posts = posts.OrderByDescending(p => p.Title).ToList();
+            }
+            else if (SearchParams.SortBy.ToLower() == "author" && SearchParams.SortAsc == true)
+            {
+                this.Posts = posts.OrderBy(p => p.Author).ToList();
+            }
+            else if (SearchParams.SortBy.ToLower() == "author" && SearchParams.SortAsc == false)
+            {
+                this.Posts = posts.OrderByDescending(p => p.Author).ToList();
+            }
+            else if (SearchParams.SortBy.ToLower() == "postdate" && SearchParams.SortAsc == true)
+            {
+                this.Posts = posts.OrderBy(p => p.PostDate).ToList();
+            }
+            else if (SearchParams.SortBy.ToLower() == "postdate" && SearchParams.SortAsc == false)
+            {
+                this.Posts = posts.OrderByDescending(p => p.PostDate).ToList();
+            }
+            else
+            {
+                this.Posts = posts;
+            }
         }
 
         public class Post
@@ -133,6 +186,14 @@ namespace tanwebapp.Pages
             public string Content { get; set; }
             public string Author { get; set; }
             public DateTime PostDate { get; set; }
+        }
+
+        public class SearchParameters
+        {
+            public string? SearchBy { get; set; }
+            public string? Keyword { get; set; }
+            public string? SortBy { get; set; }
+            public bool? SortAsc { get; set; }
         }
     }
 }
